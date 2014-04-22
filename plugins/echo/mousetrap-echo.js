@@ -4,27 +4,59 @@
 
   var _callback;
 
-  var _breaker;
+  var _breakers = {};
 
+  // store original handleKey
   var _superHandleKey = Mousetrap.handleKey;
-  // store text entered until breaker
-  // reset _handleKey and call callback on text
-  // pass breaker to Mousetrap
-  //
-  // make for 1 combo then refactor to allow arrays on entry
 
-  var _modifiedCharacter(character, modifiers) {
+  var _extractBreaker = function (combination) {
+    combination = combination.split('+');
+    var character;
 
-  }
+    combination.forEach(function (key, index) {
+      if (key.length === 1) character = character = character ? -1 : index;
+    });
+    if (character === -1) return;
+
+    character = character === undefined ? [] : combination.splice(character, 1);
+
+    return _modifyCharacter(character, combination);
+  };
+
+  var _modifyCharacter = function (character, modifiers) {
+    var combination = modifiers.sort(function (x, y) {
+      return x > y ? 1 : -1;
+    }).concat(character);
+   
+    // if a meta key is held, only take the keydown -- see original for keyup/keydown/keypress distinctions
+
+    return combination.length ? combination : undefined;
+  };
+
+  var _parseBreakers = function (combinations) {
+    var breakers = {};
+    combinations = Array.isArray(combinations) ? combinations : [combinations];
+  
+    combinations.forEach(function (combination) {
+      var breaker = _extractBreaker(combination);
+      if (breaker) breakers[breaker] = true; 
+    });
+
+    return breakers;
+  };
 
   var _fireCallback = function (callback) {
     Mousetrap.handleKey = _superHandleKey;
     callback(_record);
   };
 
-  var _handleKey = function(character, modifiers, e) {
-    if (_breaker[character] ||
-      _breaker[_modifiedCharacter(character, modifiers)]) {
+  var _recordKey = function (character, modifiers) {
+    _record.push(character);
+  };
+
+  var _handleKey = function (character, modifiers, e) {
+    if (_breakers[character] ||
+      _breakers[_modifyCharacter(character, modifiers)]) {
       _fireCallback(_callback);
       return;
     }
@@ -36,11 +68,10 @@
 
 
 
-  Mousetrap.echo = function(callback, breaker) {
-   _callback = callback;
-   _breaker = _parseBreakers(breaker);
-   _allowAllKeys = allowAllKeys;
-   Mousetrap.handleKey = _handleKey;
+  Mousetrap.echo = function (callback, breaker) {
+    _callback = callback;
+    _breakers = _parseBreakers(breaker);
+    Mousetrap.handleKey = _handleKey;
   };
 
 })(Mousetrap);
