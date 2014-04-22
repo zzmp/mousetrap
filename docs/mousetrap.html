@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>mousetrap.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>mousetrap.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>anonymous function invocation to add Mousetrap to the global object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(window, document, undefined)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>map ascii to human-readable names</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> _MAP = {
+            <span class="hljs-number">8</span>: <span class="hljs-string">'backspace'</span>,
+            <span class="hljs-number">9</span>: <span class="hljs-string">'tab'</span>,
+            <span class="hljs-number">13</span>: <span class="hljs-string">'enter'</span>,
+            <span class="hljs-number">16</span>: <span class="hljs-string">'shift'</span>,
+            <span class="hljs-number">17</span>: <span class="hljs-string">'ctrl'</span>,
+            <span class="hljs-number">18</span>: <span class="hljs-string">'alt'</span>,
+            <span class="hljs-number">20</span>: <span class="hljs-string">'capslock'</span>,
+            <span class="hljs-number">27</span>: <span class="hljs-string">'esc'</span>,
+            <span class="hljs-number">32</span>: <span class="hljs-string">'space'</span>,
+            <span class="hljs-number">33</span>: <span class="hljs-string">'pageup'</span>,
+            <span class="hljs-number">34</span>: <span class="hljs-string">'pagedown'</span>,
+            <span class="hljs-number">35</span>: <span class="hljs-string">'end'</span>,
+            <span class="hljs-number">36</span>: <span class="hljs-string">'home'</span>,
+            <span class="hljs-number">37</span>: <span class="hljs-string">'left'</span>,
+            <span class="hljs-number">38</span>: <span class="hljs-string">'up'</span>,
+            <span class="hljs-number">39</span>: <span class="hljs-string">'right'</span>,
+            <span class="hljs-number">40</span>: <span class="hljs-string">'down'</span>,
+            <span class="hljs-number">45</span>: <span class="hljs-string">'ins'</span>,
+            <span class="hljs-number">46</span>: <span class="hljs-string">'del'</span>,
+            <span class="hljs-number">91</span>: <span class="hljs-string">'meta'</span>,
+            <span class="hljs-number">93</span>: <span class="hljs-string">'meta'</span>,
+            <span class="hljs-number">224</span>: <span class="hljs-string">'meta'</span>
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>map ascii to special characters </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _KEYCODE_MAP = {
+            <span class="hljs-number">106</span>: <span class="hljs-string">'*'</span>,
+            <span class="hljs-number">107</span>: <span class="hljs-string">'+'</span>,
+            <span class="hljs-number">109</span>: <span class="hljs-string">'-'</span>,
+            <span class="hljs-number">110</span>: <span class="hljs-string">'.'</span>,
+            <span class="hljs-number">111</span> : <span class="hljs-string">'/'</span>,
+            <span class="hljs-number">186</span>: <span class="hljs-string">';'</span>,
+            <span class="hljs-number">187</span>: <span class="hljs-string">'='</span>,
+            <span class="hljs-number">188</span>: <span class="hljs-string">','</span>,
+            <span class="hljs-number">189</span>: <span class="hljs-string">'-'</span>,
+            <span class="hljs-number">190</span>: <span class="hljs-string">'.'</span>,
+            <span class="hljs-number">191</span>: <span class="hljs-string">'/'</span>,
+            <span class="hljs-number">192</span>: <span class="hljs-string">'`'</span>,
+            <span class="hljs-number">219</span>: <span class="hljs-string">'['</span>,
+            <span class="hljs-number">220</span>: <span class="hljs-string">'\\'</span>,
+            <span class="hljs-number">221</span>: <span class="hljs-string">']'</span>,
+            <span class="hljs-number">222</span>: <span class="hljs-string">'\''</span>
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>map shifted keys to unshifted characters</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _SHIFT_MAP = {
+            <span class="hljs-string">'~'</span>: <span class="hljs-string">'`'</span>,
+            <span class="hljs-string">'!'</span>: <span class="hljs-string">'1'</span>,
+            <span class="hljs-string">'@'</span>: <span class="hljs-string">'2'</span>,
+            <span class="hljs-string">'#'</span>: <span class="hljs-string">'3'</span>,
+            <span class="hljs-string">'$'</span>: <span class="hljs-string">'4'</span>,
+            <span class="hljs-string">'%'</span>: <span class="hljs-string">'5'</span>,
+            <span class="hljs-string">'^'</span>: <span class="hljs-string">'6'</span>,
+            <span class="hljs-string">'&amp;'</span>: <span class="hljs-string">'7'</span>,
+            <span class="hljs-string">'*'</span>: <span class="hljs-string">'8'</span>,
+            <span class="hljs-string">'('</span>: <span class="hljs-string">'9'</span>,
+            <span class="hljs-string">')'</span>: <span class="hljs-string">'0'</span>,
+            <span class="hljs-string">'_'</span>: <span class="hljs-string">'-'</span>,
+            <span class="hljs-string">'+'</span>: <span class="hljs-string">'='</span>,
+            <span class="hljs-string">':'</span>: <span class="hljs-string">';'</span>,
+            <span class="hljs-string">'\"'</span>: <span class="hljs-string">'\''</span>,
+            <span class="hljs-string">'&lt;'</span>: <span class="hljs-string">','</span>,
+            <span class="hljs-string">'&gt;'</span>: <span class="hljs-string">'.'</span>,
+            <span class="hljs-string">'?'</span>: <span class="hljs-string">'/'</span>,
+            <span class="hljs-string">'|'</span>: <span class="hljs-string">'\\'</span>
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>map alternate names to modifier characters</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _SPECIAL_ALIASES = {
+            <span class="hljs-string">'option'</span>: <span class="hljs-string">'alt'</span>,
+            <span class="hljs-string">'command'</span>: <span class="hljs-string">'meta'</span>,
+            <span class="hljs-string">'return'</span>: <span class="hljs-string">'enter'</span>,
+            <span class="hljs-string">'escape'</span>: <span class="hljs-string">'esc'</span>,
+            <span class="hljs-string">'mod'</span>: <span class="hljs-regexp">/Mac|iPod|iPhone|iPad/</span>.test(navigator.platform) ? <span class="hljs-string">'meta'</span> : <span class="hljs-string">'ctrl'</span>
+        },
+
+        _REVERSE_MAP,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>map of bound callbacks</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _callbacks = {},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>map of combos to callbacks (used in trigger)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _directMap = {},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>tracks current sequence levels for overlapping bindings (ex.: ‘a + b’, ‘a + c’)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _sequenceLevels = {},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>setTimeout return ID (for sequencing)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _resetTimer,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>marker to ignore next keyup event</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _ignoreNextKeyup = <span class="hljs-literal">false</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>marker to ignore next keypress event</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _ignoreNextKeypress = <span class="hljs-literal">false</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>marker for next expected event (false if not in sequence)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _nextExpectedAction = <span class="hljs-literal">false</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>add function keys to _MAP (F1, etc.)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-number">20</span>; ++i) {
+        _MAP[<span class="hljs-number">111</span> + i] = <span class="hljs-string">'f'</span> + i;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>add numpad keys to _MAP</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt;= <span class="hljs-number">9</span>; ++i) {
+        _MAP[i + <span class="hljs-number">96</span>] = i;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>cross-browser compatibility</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_addEvent</span><span class="hljs-params">(object, type, callback)</span> {</span>
+        <span class="hljs-keyword">if</span> (object.addEventListener) {
+            object.addEventListener(type, callback, <span class="hljs-literal">false</span>);
+            <span class="hljs-keyword">return</span>;
+        }
+
+        object.attachEvent(<span class="hljs-string">'on'</span> + type, callback);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>return character from event</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_characterFromEvent</span><span class="hljs-params">(e)</span> {</span>
+
+        <span class="hljs-keyword">if</span> (e.type == <span class="hljs-string">'keypress'</span>) {
+            <span class="hljs-keyword">var</span> character = <span class="hljs-built_in">String</span>.fromCharCode(e.which);
+
+            <span class="hljs-keyword">if</span> (!e.shiftKey) {
+                character = character.toLowerCase();
+            }
+
+            <span class="hljs-keyword">return</span> character;
+        }
+
+        <span class="hljs-keyword">if</span> (_MAP[e.which]) {
+            <span class="hljs-keyword">return</span> _MAP[e.which];
+        }
+
+        <span class="hljs-keyword">if</span> (_KEYCODE_MAP[e.which]) {
+            <span class="hljs-keyword">return</span> _KEYCODE_MAP[e.which];
+        }
+
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">String</span>.fromCharCode(e.which).toLowerCase();
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>check if two arrays contain the same modifiers</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_modifiersMatch</span><span class="hljs-params">(modifiers1, modifiers2)</span> {</span>
+        <span class="hljs-keyword">return</span> modifiers1.sort().join(<span class="hljs-string">','</span>) === modifiers2.sort().join(<span class="hljs-string">','</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>reset all sequence levels except for those in doNotReset</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_resetSequences</span><span class="hljs-params">(doNotReset)</span> {</span>
+        doNotReset = doNotReset || {};
+
+        <span class="hljs-keyword">var</span> activeSequences = <span class="hljs-literal">false</span>,
+            key;
+
+        <span class="hljs-keyword">for</span> (key <span class="hljs-keyword">in</span> _sequenceLevels) {
+            <span class="hljs-keyword">if</span> (doNotReset[key]) {
+                activeSequences = <span class="hljs-literal">true</span>;
+                <span class="hljs-keyword">continue</span>;
+            }
+            _sequenceLevels[key] = <span class="hljs-number">0</span>;
+        }
+
+        <span class="hljs-keyword">if</span> (!activeSequences) {
+            _nextExpectedAction = <span class="hljs-literal">false</span>;
+        }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>return all matching callbacks</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_getMatches</span><span class="hljs-params">(character, modifiers, e, sequenceName, combination, level)</span> {</span>
+        <span class="hljs-keyword">var</span> i,
+            callback,
+            matches = [],
+            action = e.type;
+
+        <span class="hljs-keyword">if</span> (!_callbacks[character]) {
+            <span class="hljs-keyword">return</span> [];
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>detect modifiers</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (action == <span class="hljs-string">'keyup'</span> &amp;&amp; _isModifier(character)) {
+            modifiers = [character];
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>for all callbacks using this character</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; _callbacks[character].length; ++i) {
+            callback = _callbacks[character][i];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>only check callbacks that terminate at this sequence level</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (!sequenceName &amp;&amp; callback.seq &amp;&amp; _sequenceLevels[callback.seq] != callback.level) {
+                <span class="hljs-keyword">continue</span>;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>only check callback that terminate at this event action (keypress, etc.)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (action != callback.action) {
+                <span class="hljs-keyword">continue</span>;
+            }
+
+            <span class="hljs-keyword">if</span> ((action == <span class="hljs-string">'keypress'</span> &amp;&amp; !e.metaKey &amp;&amp; !e.ctrlKey) || _modifiersMatch(modifiers, callback.modifiers)) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>overwrite old bindings</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> deleteCombo = !sequenceName &amp;&amp; callback.combo == combination;
+                <span class="hljs-keyword">var</span> deleteSequence = sequenceName &amp;&amp; callback.seq == sequenceName &amp;&amp; callback.level == level;
+                <span class="hljs-keyword">if</span> (deleteCombo || deleteSequence) {
+                    _callbacks[character].splice(i, <span class="hljs-number">1</span>);
+                }
+
+                matches.push(callback);
+            }
+        }
+
+        <span class="hljs-keyword">return</span> matches;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>translate keys to modifiers</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_eventModifiers</span><span class="hljs-params">(e)</span> {</span>
+        <span class="hljs-keyword">var</span> modifiers = [];
+
+        <span class="hljs-keyword">if</span> (e.shiftKey) {
+            modifiers.push(<span class="hljs-string">'shift'</span>);
+        }
+
+        <span class="hljs-keyword">if</span> (e.altKey) {
+            modifiers.push(<span class="hljs-string">'alt'</span>);
+        }
+
+        <span class="hljs-keyword">if</span> (e.ctrlKey) {
+            modifiers.push(<span class="hljs-string">'ctrl'</span>);
+        }
+
+        <span class="hljs-keyword">if</span> (e.metaKey) {
+            modifiers.push(<span class="hljs-string">'meta'</span>);
+        }
+
+        <span class="hljs-keyword">return</span> modifiers;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>stop event default</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_preventDefault</span><span class="hljs-params">(e)</span> {</span>
+        <span class="hljs-keyword">if</span> (e.preventDefault) {
+            e.preventDefault();
+            <span class="hljs-keyword">return</span>;
+        }
+
+        e.returnValue = <span class="hljs-literal">false</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>stop event propogation</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_stopPropagation</span><span class="hljs-params">(e)</span> {</span>
+        <span class="hljs-keyword">if</span> (e.stopPropagation) {
+            e.stopPropagation();
+            <span class="hljs-keyword">return</span>;
+        }
+
+        e.cancelBubble = <span class="hljs-literal">true</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>invoke the callback; stop default/propgation is callback returns false</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_fireCallback</span><span class="hljs-params">(callback, e, combo, sequence)</span> {</span>
+
+        <span class="hljs-keyword">if</span> (Mousetrap.stopCallback(e, e.target || e.srcElement, combo, sequence)) {
+            <span class="hljs-keyword">return</span>;
+        }
+
+        <span class="hljs-keyword">if</span> (callback(e, combo) === <span class="hljs-literal">false</span>) {
+            _preventDefault(e);
+            _stopPropagation(e);
+        }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>handle key events</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_handleKey</span><span class="hljs-params">(character, modifiers, e)</span> {</span>
+        <span class="hljs-keyword">var</span> callbacks = _getMatches(character, modifiers, e),
+            i,
+            doNotReset = {},
+            maxLevel = <span class="hljs-number">0</span>,
+            processedSequenceCallback = <span class="hljs-literal">false</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>calculate maxLevel of matching callbacks (only longest sequence should be called)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; callbacks.length; ++i) {
+            <span class="hljs-keyword">if</span> (callbacks[i].seq) {
+                maxLevel = <span class="hljs-built_in">Math</span>.max(maxLevel, callbacks[i].level);
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>for all matching callbacks</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; callbacks.length; ++i) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>for all sequences</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (callbacks[i].seq) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>only fire callbacks at maxLevel (to prevent subsequences, i.e. ‘g + t’ v. ‘a + g + t’)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (callbacks[i].level != maxLevel) {
+                    <span class="hljs-keyword">continue</span>;
+                }
+
+                processedSequenceCallback = <span class="hljs-literal">true</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>record processed sequences</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                doNotReset[callbacks[i].seq] = <span class="hljs-number">1</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>invoke callback on sequence (e.g. keep it alive)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                _fireCallback(callbacks[i].callback, e, callbacks[i].combo, callbacks[i].seq);
+                <span class="hljs-keyword">continue</span>;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>invoke callback on combo (if no sequence was found)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (!processedSequenceCallback) {
+                _fireCallback(callbacks[i].callback, e, callbacks[i].combo);
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>reset unmatched sequences</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> ignoreThisKeypress = e.type == <span class="hljs-string">'keypress'</span> &amp;&amp; _ignoreNextKeypress;
+        <span class="hljs-keyword">if</span> (e.type == _nextExpectedAction &amp;&amp; !_isModifier(character) &amp;&amp; !ignoreThisKeypress) {
+            _resetSequences(doNotReset);
+        }
+
+        _ignoreNextKeypress = processedSequenceCallback &amp;&amp; e.type == <span class="hljs-string">'keydown'</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>handle keydown events</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_handleKeyEvent</span><span class="hljs-params">(e)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>see <a href="http://stackoverflow.com/questions/4285627/javascript-keycode-vs-charcode-utter-confusion">http://stackoverflow.com/questions/4285627/javascript-keycode-vs-charcode-utter-confusion</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> e.which !== <span class="hljs-string">'number'</span>) {
+            e.which = e.keyCode;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>retrieve character from event</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> character = _characterFromEvent(e);
+
+        <span class="hljs-keyword">if</span> (!character) {
+            <span class="hljs-keyword">return</span>;
+        }
+
+        <span class="hljs-keyword">if</span> (e.type == <span class="hljs-string">'keyup'</span> &amp;&amp; _ignoreNextKeyup === character) {
+            _ignoreNextKeyup = <span class="hljs-literal">false</span>;
+            <span class="hljs-keyword">return</span>;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>pass to helper function</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        Mousetrap.handleKey(character, _eventModifiers(e), e);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>return modifier name</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_isModifier</span><span class="hljs-params">(key)</span> {</span>
+        <span class="hljs-keyword">return</span> key == <span class="hljs-string">'shift'</span> || key == <span class="hljs-string">'ctrl'</span> || key == <span class="hljs-string">'alt'</span> || key == <span class="hljs-string">'meta'</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>time pauses in sequence (1s)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_resetSequenceTimer</span><span class="hljs-params">()</span> {</span>
+        clearTimeout(_resetTimer);
+        _resetTimer = setTimeout(_resetSequences, <span class="hljs-number">1000</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>reverse map lookup</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_getReverseMap</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">if</span> (!_REVERSE_MAP) {
+            _REVERSE_MAP = {};
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> _MAP) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>pull out the numeric keypad from here cause keypress should
+be able to detect the keys from the character</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (key &gt; <span class="hljs-number">95</span> &amp;&amp; key &lt; <span class="hljs-number">112</span>) {
+                    <span class="hljs-keyword">continue</span>;
+                }
+
+                <span class="hljs-keyword">if</span> (_MAP.hasOwnProperty(key)) {
+                    _REVERSE_MAP[_MAP[key]] = key;
+                }
+            }
+        }
+        <span class="hljs-keyword">return</span> _REVERSE_MAP;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>pick action based on key</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_pickBestAction</span><span class="hljs-params">(key, modifiers, action)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>if no action is passed, pick the best one based on mapping</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (!action) {
+            action = _getReverseMap()[key] ? <span class="hljs-string">'keydown'</span> : <span class="hljs-string">'keypress'</span>;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <p>modifiers trigger keydown action</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (action == <span class="hljs-string">'keypress'</span> &amp;&amp; modifiers.length) {
+            action = <span class="hljs-string">'keydown'</span>;
+        }
+
+        <span class="hljs-keyword">return</span> action;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <p>bind key sequence</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_bindSequence</span><span class="hljs-params">(combo, keys, callback, action)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-50">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-50">&#182;</a>
+              </div>
+              <p>initialize sequence level</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _sequenceLevels[combo] = <span class="hljs-number">0</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-51">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
+              <p>increase sequence level and reset other sequences</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_increaseSequence</span><span class="hljs-params">(nextAction)</span> {</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+                _nextExpectedAction = nextAction;
+                ++_sequenceLevels[combo];
+                _resetSequenceTimer();
+            };
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-52">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-52">&#182;</a>
+              </div>
+              <p>fire callback and reset sequences</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_callbackAndReset</span><span class="hljs-params">(e)</span> {</span>
+            _fireCallback(callback, e, combo);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-53">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-53">&#182;</a>
+              </div>
+              <p>prevent double-triggering</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	    <span class="hljs-keyword">if</span> (action !== <span class="hljs-string">'keyup'</span>) {
+                _ignoreNextKeyup = _characterFromEvent(e);
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-54">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-54">&#182;</a>
+              </div>
+              <p>avoid race condition</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            setTimeout(_resetSequences, <span class="hljs-number">10</span>);
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-55">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-55">&#182;</a>
+              </div>
+              <p>bind the sequence</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; keys.length; ++i) {
+            <span class="hljs-keyword">var</span> isFinal = i + <span class="hljs-number">1</span> === keys.length;
+            <span class="hljs-keyword">var</span> wrappedCallback = isFinal ? _callbackAndReset : _increaseSequence(action || _getKeyInfo(keys[i + <span class="hljs-number">1</span>]).action);
+            _bindSingle(keys[i], wrappedCallback, action, combo, i);
+        }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-56">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-56">&#182;</a>
+              </div>
+              <p>Get keys from string representation</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_keysFromString</span><span class="hljs-params">(combination)</span> {</span>
+        <span class="hljs-keyword">if</span> (combination === <span class="hljs-string">'+'</span>) {
+            <span class="hljs-keyword">return</span> [<span class="hljs-string">'+'</span>];
+        }
+
+        <span class="hljs-keyword">return</span> combination.split(<span class="hljs-string">'+'</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-57">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-57">&#182;</a>
+              </div>
+              <p>Get information on bound keys</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_getKeyInfo</span><span class="hljs-params">(combination, action)</span> {</span>
+        <span class="hljs-keyword">var</span> keys,
+            key,
+            i,
+            modifiers = [];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-58">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-58">&#182;</a>
+              </div>
+              <p>Get keys from string representation (as an array)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        keys = _keysFromString(combination);
+
+        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; keys.length; ++i) {
+            key = keys[i];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-59">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-59">&#182;</a>
+              </div>
+              <p>normalize key names</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (_SPECIAL_ALIASES[key]) {
+                key = _SPECIAL_ALIASES[key];
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-60">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-60">&#182;</a>
+              </div>
+              <p>use shifted keys</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (action &amp;&amp; action != <span class="hljs-string">'keypress'</span> &amp;&amp; _SHIFT_MAP[key]) {
+                key = _SHIFT_MAP[key];
+                modifiers.push(<span class="hljs-string">'shift'</span>);
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-61">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-61">&#182;</a>
+              </div>
+              <p>detect modifiers</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (_isModifier(key)) {
+                modifiers.push(key);
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-62">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-62">&#182;</a>
+              </div>
+              <p>find the best action</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        action = _pickBestAction(key, modifiers, action);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-63">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-63">&#182;</a>
+              </div>
+              <p>return key combination information</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">return</span> {
+            key: key,
+            modifiers: modifiers,
+            action: action
+        };
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-64">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-64">&#182;</a>
+              </div>
+              <p>bind combo</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_bindSingle</span><span class="hljs-params">(combination, callback, action, sequenceName, level)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-65">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-65">&#182;</a>
+              </div>
+              <p>map callback (for Mousetrap.trigger)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _directMap[combination + <span class="hljs-string">':'</span> + action] = callback;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-66">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-66">&#182;</a>
+              </div>
+              <p>trim excess space (‘ ‘)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        combination = combination.replace(<span class="hljs-regexp">/\s+/g</span>, <span class="hljs-string">' '</span>);
+
+        <span class="hljs-keyword">var</span> sequence = combination.split(<span class="hljs-string">' '</span>),
+            info;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-67">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-67">&#182;</a>
+              </div>
+              <p>detect multiple combos</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (sequence.length &gt; <span class="hljs-number">1</span>) {
+            _bindSequence(combination, sequence, callback, action);
+            <span class="hljs-keyword">return</span>;
+        }
+
+        info = _getKeyInfo(combination, action);
+
+        _callbacks[info.key] = _callbacks[info.key] || [];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-68">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-68">&#182;</a>
+              </div>
+              <p>remove duplicates</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _getMatches(info.key, info.modifiers, {type: info.action}, sequenceName, combination, level);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-69">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-69">&#182;</a>
+              </div>
+              <p>unshift sequences, push combos</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _callbacks[info.key][sequenceName ? <span class="hljs-string">'unshift'</span> : <span class="hljs-string">'push'</span>]({
+            callback: callback,
+            modifiers: info.modifiers,
+            action: info.action,
+            seq: sequenceName,
+            level: level,
+            combo: combination
+        });
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-70">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-70">&#182;</a>
+              </div>
+              <p>bind combos</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_bindMultiple</span><span class="hljs-params">(combinations, callback, action)</span> {</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; combinations.length; ++i) {
+            _bindSingle(combinations[i], callback, action);
+        }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-71">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-71">&#182;</a>
+              </div>
+              <p>start!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _addEvent(document, <span class="hljs-string">'keypress'</span>, _handleKeyEvent);
+    _addEvent(document, <span class="hljs-string">'keydown'</span>, _handleKeyEvent);
+    _addEvent(document, <span class="hljs-string">'keyup'</span>, _handleKeyEvent);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-72">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-72">&#182;</a>
+              </div>
+              <p>the library, bound to the global object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> Mousetrap = {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-73">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-73">&#182;</a>
+              </div>
+              <p>bind callback to mousetrap</p>
+<blockquote>
+<p>can be a single key, a combination of keys separated with +, an array of keys, or a sequence of keys separated by spaces</p>
+</blockquote>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        bind: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(keys, callback, action)</span> {</span>
+            keys = keys <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Array</span> ? keys : [keys];
+            _bindMultiple(keys, callback, action);
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-74">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-74">&#182;</a>
+              </div>
+              <p>unbind callback from mousetrap</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        unbind: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(keys, action)</span> {</span>
+            <span class="hljs-keyword">return</span> Mousetrap.bind(keys, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>}, action);
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-75">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-75">&#182;</a>
+              </div>
+              <p>trigger bound callback</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        trigger: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(keys, action)</span> {</span>
+            <span class="hljs-keyword">if</span> (_directMap[keys + <span class="hljs-string">':'</span> + action]) {
+                _directMap[keys + <span class="hljs-string">':'</span> + action]({}, keys);
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-76">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-76">&#182;</a>
+              </div>
+              <p>reset bound callbacks</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        reset: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            _callbacks = {};
+            _directMap = {};
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-77">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-77">&#182;</a>
+              </div>
+              <p>stop callbacks if DOM element should not use Mousetrap</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        stopCallback: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e, element)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-78">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-78">&#182;</a>
+              </div>
+              <p>allow callbacks if DOM element has class mousetrap</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> ((<span class="hljs-string">' '</span> + element.className + <span class="hljs-string">' '</span>).indexOf(<span class="hljs-string">' mousetrap '</span>) &gt; -<span class="hljs-number">1</span>) {
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-79">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-79">&#182;</a>
+              </div>
+              <p>disallow callbacks for input, select, and textarea elements</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">return</span> element.tagName == <span class="hljs-string">'INPUT'</span> || element.tagName == <span class="hljs-string">'SELECT'</span> || element.tagName == <span class="hljs-string">'TEXTAREA'</span> || element.isContentEditable;
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-80">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-80">&#182;</a>
+              </div>
+              <p>OMG an exposed key: for plugins like mine!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        handleKey: _handleKey
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-81">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-81">&#182;</a>
+              </div>
+              <p>expose Mousetrap to the global object (browser)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    window.Mousetrap = Mousetrap;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-82">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-82">&#182;</a>
+              </div>
+              <p>expose Mousetrap to the global object (AMD)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> define === <span class="hljs-string">'function'</span> &amp;&amp; define.amd) {
+        define(Mousetrap);
+    }
+}) (window, document);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
