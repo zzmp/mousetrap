@@ -10,15 +10,18 @@ Essentially, echo implements blind typing:
 
 <script>
   function echoType() {
-    Mousetrap.echo(function(sequence) {
-      // sequence is an array like ['t', 'h', 'i', 's', ' ',' i', 's']
-      alert('You pressed: ' + sequence.join(' '));
-    }, 'enter');
-      // typing 'enter' will trigger the callback);
-  }
+    Mousetrap.echo(function(plaintextString, objectArray) {
+      /** plaintextString is a string like 'this one'.
+       * objectArray is an array of objects exposing modifiers and special characters:
+       *     [{character: 'enter', modifiers: 'shift'}]
+       */
+      alert('You pressed: ' + plaintextString);
+    }, 'shift+enter');
+      /** typing 'shift+enter' will trigger the callback);
+       *      only one character can be used to trigger,
+       *      although any modifiers may be used in conjunction
+       */
+    }
 </script>
 ```
 
-Additionaly, echo allows ASCII-like return with a third parameter:
-
-```Mousetrap.echo(callback, 'enter', {ASCII: true});```
