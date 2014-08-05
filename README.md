@@ -15,7 +15,7 @@ If you would like to donate to help support Mousetrap development use [Gittip](h
 
 ## Getting started
 
-1.  Include mousetrap on your page before the closing ``</body>`` tag
+1.  Include Mousetrap on your page before the closing ``</body>`` tag
 
     ```html
     <script src="/path/to/mousetrap.min.js"></script>
@@ -42,7 +42,7 @@ If you would like to donate to help support Mousetrap development use [Gittip](h
             return false;
         });
 
-        // gmail style sequences
+        // gmail-style sequences
         Mousetrap.bind('g i', function() { console.log('go to inbox'); });
         Mousetrap.bind('* a', function() { console.log('select all'); });
 
@@ -61,7 +61,7 @@ There are a number of other similar libraries out there so what makes this one d
 - You are not limited to ``keydown`` events (You can specify ``keypress``, ``keydown``, or ``keyup`` or let Mousetrap choose for you).
 - You can bind key events directly to special keys such as ``?`` or ``*`` without having to specify ``shift+/`` or ``shift+8`` which are not consistent across all keyboards
 - It works with international keyboard layouts
-- You can bind Gmail like key sequences in addition to regular keys and key combinations
+- You can bind Gmail-like key sequences in addition to regular keys and key combinations
 - You can programatically trigger key events with the ``trigger()`` method
 - It works with the numeric keypad on your keyboard
 - The code is well documented/commented
